@@ -1,12 +1,10 @@
-'''
-'''
+""" """
 
 import numpy as np
 from sklearn.base import BaseEstimator
 
 
-
-#Dynamic time warping stuff
+# Dynamic time warping stuff
 def d_DTW(x, x2, dist):
     t1, t2 = len(x), len(x2)
 
@@ -74,6 +72,7 @@ def d4(x, x2):
         dists[i] = d2(x[i], x2[i])
     return dists
 
+
 def d_euclidean(x, x2):
     return np.linalg.norm(np.array(x) - np.array(x2))
 
@@ -82,9 +81,9 @@ k1_hyp, k2_hyp, k3_hyp = [
     lambda lmbd: (lambda x, x2: np.exp(-lmbd * d_DTW(x, x2, d))) for d in [d1, d2, d3]
 ]
 
-k_rbf = lambda gamma: (lambda x,x2: np.exp(-gamma*(d_euclidean(x,x2)**2)))
+k_rbf = lambda gamma: (lambda x, x2: np.exp(-gamma * (d_euclidean(x, x2) ** 2)))
 
-k_poly = lambda p : (lambda x,x2: (np.dot(x.T, x2)+1)**p)
+k_poly = lambda p: (lambda x, x2: np.dot(x.T, x2) ** p)
 
 
 def build_dtw_gram_matrix(xs, x2s, k):
