@@ -129,6 +129,7 @@ def learn_reg_kernel_ERM(
     tol=0.001,
     eta=1.0,
     verbose=False,
+    seed = 42
 ):
     """Kernel Linear Regression (default: kernelized L_2 SVM)
     X -- data, each row = instance
@@ -143,6 +144,7 @@ def learn_reg_kernel_ERM(
     """
 
     g_old = None
+    np.random.seed(seed=seed)
 
     K = build_dtw_gram_matrix(
         X, X, k
@@ -183,7 +185,8 @@ def predict(alpha, X, X_train, k):
 
 class KernelEstimator(BaseEstimator):
 
-    def __init__(self, k, k_param = 1,  lbda=1, max_iter = 20000, eta = 1, tol = 1e-3):
+    def __init__(self, k, k_param = 1,  lbda=1, max_iter = 20000, eta = 1, tol = 1e-3, seed=42):
+        self.seed = seed
         self.k = k
         self.k_param = k_param
         self.lbda = lbda
@@ -195,7 +198,7 @@ class KernelEstimator(BaseEstimator):
         self.built_kernal = self.k(self.k_param)
         self._X_train = X
         self._alpha, _ = learn_reg_kernel_ERM(
-            X, y, lbda=self.lbda, k=self.built_kernal, max_iter=self.max_iter, eta=self.eta, tol=self.tol
+            X, y, lbda=self.lbda, k=self.built_kernal, max_iter=self.max_iter, eta=self.eta, tol=self.tol, seed=self.seed
         )
         return self
 
