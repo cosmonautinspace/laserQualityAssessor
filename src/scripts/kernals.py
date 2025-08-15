@@ -3,6 +3,8 @@
 import numpy as np
 from sklearn.base import BaseEstimator
 
+np.random.seed(42)
+
 
 # Dynamic time warping stuff
 def d_DTW(x, x2, dist):
@@ -181,22 +183,24 @@ def predict(alpha, X, X_train, k):
 
 class KernelEstimator(BaseEstimator):
 
-    def __init__(self, k, lbda, max_iter = 20000, eta = 1, tol = 1e-3):
+    def __init__(self, k, k_param = 1,  lbda=1, max_iter = 20000, eta = 1, tol = 1e-3):
         self.k = k
+        self.k_param = k_param
         self.lbda = lbda
         self.max_iter = max_iter
         self.eta = eta
         self.tol = tol
 
     def fit(self, X, y):
+        self.built_kernal = self.k(self.k_param)
         self._X_train = X
         self._alpha, _ = learn_reg_kernel_ERM(
-            X, y, lbda=self.lbda, k=self.k, max_iter=self.max_iter, eta=self.eta, tol=self.tol
+            X, y, lbda=self.lbda, k=self.built_kernal, max_iter=self.max_iter, eta=self.eta, tol=self.tol
         )
         return self
 
     def predict(self, X):
-        return predict(self._alpha, self._X_train, X, self.k)
+        return predict(self._alpha, self._X_train, X, self.built_kernal)
 
     def score(self, X, y):
         y_pred = self.predict(X)
