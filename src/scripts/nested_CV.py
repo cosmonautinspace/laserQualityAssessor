@@ -1,4 +1,4 @@
-from sklearn.model_selection import KFold, GridSearchCV, RandomizedSearchCV
+from sklearn.model_selection import KFold, GridSearchCV, RandomizedSearchCV, StratifiedKFold
 from sklearn.base import clone
 import numpy as np
 
@@ -65,7 +65,7 @@ def nested_cv(
             'models': list of trained models (if return_models=True)
     """
 
-    outer_cv_splitter = KFold(
+    outer_cv_splitter = StratifiedKFold(
         n_splits=outer_cv, shuffle=True, random_state=random_state
     )
     outer_scores = []
