@@ -181,14 +181,17 @@ def predict(alpha, X, X_train, k):
 
 class KernelEstimator(BaseEstimator):
 
-    def __init__(self, k, lbda):
+    def __init__(self, k, lbda, max_iter = 20000, eta = 1, tol = 1e-3):
         self.k = k
         self.lbda = lbda
+        self.max_iter = max_iter
+        self.eta = eta
+        self.tol = tol
 
     def fit(self, X, y):
         self._X_train = X
         self._alpha, _ = learn_reg_kernel_ERM(
-            X, y, lbda=self.lbda, k=self.k, max_iter=20000, eta=1, tol=1e-3
+            X, y, lbda=self.lbda, k=self.k, max_iter=self.max_iter, eta=self.eta, tol=self.tol
         )
         return self
 
