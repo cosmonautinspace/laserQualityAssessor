@@ -160,7 +160,7 @@ def predict(alpha, X, X_train, k):
 
 class KernelEstimator(BaseEstimator):
 
-    def __init__(self, k, k_param=1, lbda=1, max_iter=20000, eta=1, tol=1e-3, seed=42):
+    def __init__(self, k, k_param=1, lbda=1, max_iter=500, eta=1, tol=1e-3, seed=42):
         self.seed = seed
         self.k = k
         self.k_param = k_param
