@@ -11,9 +11,7 @@ def nested_cv(
     inner_cv=5,
     outer_cv=5,
     scoring="accuracy",
-    search_type="grid",
-    n_iter=50,
-    random_state=None,
+    random_state=42,
     return_models=False,
 ):
     """
@@ -76,27 +74,13 @@ def nested_cv(
         X_train, X_test = X[train_idx], X[test_idx]
         y_train, y_test = y[train_idx], y[test_idx]
 
-        # Inner CV for hyperparameter tuning
-        if search_type == "grid":
-            search = GridSearchCV(
-                estimator=clone(estimator),
-                param_grid=param_grid,
-                cv=inner_cv,
-                scoring=scoring,
-                n_jobs=-1,
-            )
-        elif search_type == "random":
-            search = RandomizedSearchCV(
-                estimator=clone(estimator),
-                param_distributions=param_grid,
-                n_iter=n_iter,
-                cv=inner_cv,
-                scoring=scoring,
-                random_state=random_state,
-                n_jobs=-1,
-            )
-        else:
-            raise ValueError("search_type must be 'grid' or 'random'")
+        search = GridSearchCV(
+            estimator=clone(estimator),
+            param_grid=param_grid,
+            cv=inner_cv,
+            scoring=scoring,
+            n_jobs=-1,
+        )
 
         search.fit(X_train, y_train)
         best_estimator = search.best_estimator_
@@ -109,9 +93,20 @@ def nested_cv(
         if return_models:
             models.append(best_estimator)
 
+    star_search = GridSearchCV(
+        estimator=clone(estimator),
+        param_grid=param_grid,
+        cv=inner_cv,
+        scoring=scoring,
+        n_jobs=-1,
+    )
+
+    star_search.fit(X,y)
+    star_params = star_search.best_params_
     results = {
-        "outer_scores": outer_scores,
         "mean_score": np.mean(outer_scores),
+        "star_params": star_params,
+        "outer_scores": outer_scores,
         "std_score": np.std(outer_scores),
         "best_params": best_params,
     }
