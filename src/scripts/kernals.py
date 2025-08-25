@@ -50,29 +50,6 @@ def d3(x, x2):
     return abs(x - x2)
 
 
-def map_func(x):
-    t_something = len(x)
-    delta = np.zeros(t_something)
-    for i in range(1, t_something):
-        if i == 0:
-            continue
-        if i == t_something - 1:
-            delta[i] = x[i] - x[i - 1]
-        else:
-            delta[i] = 0.5 * (x[i] - x[i - 1] + ((x[i + 1] - x[i - 1]) / 2))
-
-    return delta
-
-
-def d4(x, x2):
-    del_x = map_func(x)
-    del_x2 = map_func(x2)
-    dists = []
-    for i in range(len(x)):
-        dists[i] = d2(x[i], x2[i])
-    return dists
-
-
 def d_euclidean(x, x2):
     return np.linalg.norm(np.array(x) - np.array(x2))
 
