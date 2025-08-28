@@ -43,7 +43,7 @@ def d1(x, x2):
 
 
 def d2(x, x2):
-    return np.array(x) - np.array(x2) ** 2
+    return (np.array(x) - np.array(x2)) ** 2
 
 
 def d3(x, x2):
