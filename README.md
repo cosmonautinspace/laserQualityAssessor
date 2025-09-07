@@ -39,7 +39,8 @@ To run the project:
         ```
         python3 -m venv <env_name>
         ```
-    2. Activate the environment by running:
+        **NOTE:** it is recommended to create create the virtual environement in the project folder. This makes it easier for certain notebook environments to auto-detect installed python kernals.
+    1. Activate the environment by running:
         - On Windows (powershell/terminal):
         ```
         <env_name>/Scripts/activate
@@ -49,17 +50,17 @@ To run the project:
         source <env_name>/bin/activate
         ```
         - For other shell variants, please refer to the `venv` documentation linked above.
-    3. (Optional) Update pip by running:
+    1. (Optional) Update pip by running:
         ```
         python -m pip install --upgrade pip
         ```
-    4. From the environment, change directory to that of the cloned repo
-    5. Install the required packages by running. This step can take a while, depending on the network connection, please be patient.:
-    ```
-    pip install -r requirements.txt
-    ```
+    1. From the environment, change directory to that of the cloned repo
+    1. Install the required packages by running. This step can take a while, depending on the network connection, please be patient.:
+        ```
+        pip install -r requirements.txt
+        ```
 
-1. Now, open the cloned repository, in a Notebook environment of your choice, and make sure to select the correct python enviroment, if one was made using the instructions above. If you are not using virtual environments, please make sure to install the packages specified in the requirements.txt
+1. Now, open the cloned repository, in a Notebook environment of your choice, and make sure to select the correct python enviroment, if one was made using the instructions above. If you are not using virtual environments, please make sure to install the packages specified in the requirements.txt . It might also be required to install the package `ipykernal` inside the environment. Some Notebook environments, allow you to install this with the click of a button, while others might not. You might have to look up instructions for this elsewhere, as they are not provided in this document.
 
 1. Run the following Jupyter notebooks, found under `src`
     - `eda.ipynb`
@@ -68,5 +69,5 @@ To run the project:
 
 
 ## Ownership:
-Name: Haani Ansari
+Name: Haani Ansari <br>
 Email: haani.ansari@uni-potsdam.de
