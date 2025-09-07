@@ -1,4 +1,9 @@
-from sklearn.model_selection import KFold, GridSearchCV, RandomizedSearchCV, StratifiedKFold
+from sklearn.model_selection import (
+    KFold,
+    GridSearchCV,
+    RandomizedSearchCV,
+    StratifiedKFold,
+)
 from sklearn.base import clone
 import numpy as np
 
@@ -33,7 +38,7 @@ def nested_cv_multi(
         n_splits=outer_cv, shuffle=True, random_state=random_state
     )
 
-    outer_scores = []   # list of dicts (per fold)
+    outer_scores = []  # list of dicts (per fold)
     best_params = []
     models = []
 
@@ -54,7 +59,7 @@ def nested_cv_multi(
             cv=inner_cv,
             scoring=scoring,
             n_jobs=-1,
-            refit=primary_scorer
+            refit=primary_scorer,
         )
         search.fit(X_train, y_train)
 
@@ -70,8 +75,9 @@ def nested_cv_multi(
         else:
             # single scorer string or callable
             scorer_func = get_scorer(scoring) if isinstance(scoring, str) else scoring
-            fold_scores[scoring if isinstance(scoring, str) else "score"] = \
-                scorer_func(best_estimator, X_test, y_test)
+            fold_scores[scoring if isinstance(scoring, str) else "score"] = scorer_func(
+                best_estimator, X_test, y_test
+            )
 
         outer_scores.append(fold_scores)
 
@@ -85,7 +91,7 @@ def nested_cv_multi(
         cv=inner_cv,
         scoring=scoring,
         n_jobs=-1,
-        refit=primary_scorer
+        refit=primary_scorer,
     )
     star_search.fit(X, y)
     star_params = star_search.best_params_
@@ -108,7 +114,7 @@ def nested_cv_multi(
     return results
 
 
-#NOTE no longer in use, but keeping it, since the rewrite hasn't been tested
+# NOTE no longer in use, but keeping it, since the rewrite hasn't been tested
 def nested_cv(
     estimator,
     X,
@@ -167,7 +173,6 @@ def nested_cv(
     :rtype: dict
     """
 
-
     outer_cv_splitter = StratifiedKFold(
         n_splits=outer_cv, shuffle=True, random_state=random_state
     )
@@ -192,7 +197,7 @@ def nested_cv(
             cv=inner_cv,
             scoring=scoring,
             n_jobs=-1,
-            refit=primary_scorer
+            refit=primary_scorer,
         )
 
         search.fit(X_train, y_train)
@@ -212,10 +217,10 @@ def nested_cv(
         cv=inner_cv,
         scoring=scoring,
         n_jobs=-1,
-        refit=primary_scorer
+        refit=primary_scorer,
     )
 
-    star_search.fit(X,y)
+    star_search.fit(X, y)
     star_params = star_search.best_params_
     results = {
         "mean_score": np.mean(outer_scores),
@@ -234,5 +239,3 @@ from sklearn.model_selection import GridSearchCV, StratifiedKFold
 from sklearn.base import clone
 from sklearn.metrics import get_scorer
 import numpy as np
-
-
