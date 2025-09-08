@@ -63,6 +63,10 @@ class dtw_SVC(BaseEstimator, ClassifierMixin):
         k_predict = self._build_gram_matrix(X, self.X_train_)
         return self.svc_.predict(k_predict)
 
+    def decision_function(self, X):
+        K_predict = self._build_gram_matrix(X, self.X_train_)
+        return self.svc_.decision_function(K_predict)
+
     def score(self, X, y):
         y_pred = self.predict(X)
         return np.mean(y_pred == y)
@@ -111,6 +115,10 @@ class rbf_SVC(BaseEstimator, ClassifierMixin):
     def predict(self, X):
         k_predict = self._build_gram_matrix(X, self.X_train_)
         return self.svc_.predict(k_predict)
+    
+    def decision_function(self, X):
+        K_predict = self._build_gram_matrix(X, self.X_train_)
+        return self.svc_.decision_function(K_predict)
 
     def score(self, X, y):
         y_pred = self.predict(X)
@@ -159,6 +167,10 @@ class poly_SVC(BaseEstimator, ClassifierMixin):
     def predict(self, X):
         k_predict = self._build_gram_matrix(X, self.X_train_)
         return self.svc_.predict(k_predict)
+
+    def decision_function(self, X):
+        K_predict = self._build_gram_matrix(X, self.X_train_)
+        return self.svc_.decision_function(K_predict)
 
     def score(self, X, y):
         y_pred = self.predict(X)
