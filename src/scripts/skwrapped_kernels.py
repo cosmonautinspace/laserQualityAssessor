@@ -115,7 +115,7 @@ class rbf_SVC(BaseEstimator, ClassifierMixin):
     def predict(self, X):
         k_predict = self._build_gram_matrix(X, self.X_train_)
         return self.svc_.predict(k_predict)
-    
+
     def decision_function(self, X):
         K_predict = self._build_gram_matrix(X, self.X_train_)
         return self.svc_.decision_function(K_predict)
