@@ -1,3 +1,4 @@
+import numpy as np
 from sklearn.model_selection import (
     KFold,
     GridSearchCV,
@@ -5,7 +6,9 @@ from sklearn.model_selection import (
     StratifiedKFold,
 )
 from sklearn.base import clone
-import numpy as np
+from sklearn.model_selection import GridSearchCV, StratifiedKFold
+from sklearn.base import clone
+from sklearn.metrics import get_scorer
 
 
 def nested_cv_multi(
@@ -235,7 +238,4 @@ def nested_cv(
     return results
 
 
-from sklearn.model_selection import GridSearchCV, StratifiedKFold
-from sklearn.base import clone
-from sklearn.metrics import get_scorer
-import numpy as np
+
